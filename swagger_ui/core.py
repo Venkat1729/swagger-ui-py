@@ -13,7 +13,7 @@ CURRENT_DIR = Path(__file__).resolve().parent
 class Interface(object):
 
     def __init__(self, app, app_type=None, config_path=None, config_url=None,
-                 url_prefix='/api/doc', title='API doc', editor=False):
+                 url_prefix='/api/doc', title='API doc', editor=False, static_url_path='/'):
 
         self._app = app
         self._title = title
@@ -21,6 +21,7 @@ class Interface(object):
         self._config_url = config_url
         self._config_path = config_path
         self._editor = editor
+        self._static_url_path = static_url_path
 
         assert self._config_url or self._config_path, 'config_url or config_path is required!'
 
@@ -119,7 +120,7 @@ class Interface(object):
 
         swagger_blueprint = Blueprint(
             'swagger_blueprint', __name__, url_prefix=self._url_prefix,
-            static_folder=self.static_dir, static_url_path='/'
+            static_folder=self.static_dir, static_url_path=self._static_url_path
         )
 
         @swagger_blueprint.route(r'')
