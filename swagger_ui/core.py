@@ -84,7 +84,7 @@ class Interface(object):
         return config
 
     def _uri(self, suffix=''):
-        return r'{}{}'.format(self._url_prefix, suffix)
+        return r'{}{}'.format(self._proxy_url_path + self._url_prefix, suffix)
 
     def _tornado_handler(self):
         from tornado.web import RequestHandler, StaticFileHandler
