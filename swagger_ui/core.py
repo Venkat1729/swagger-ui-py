@@ -14,10 +14,11 @@ class Interface(object):
 
     def __init__(self, app, app_type=None, config_path=None, config_url=None,
                  url_prefix='/api/doc', title='API doc', editor=False,
-                 proxy_url_path=''):
+                 proxy_url_path='', swagger_blueprint_name="swagger_blueprint"):
 
         self._app = app
         self._title = title
+        self._swagger_blueprint = swagger_blueprint_name
         self._url_prefix = url_prefix.rstrip('/')
         self._config_url = config_url
         self._config_path = config_path
@@ -120,7 +121,7 @@ class Interface(object):
         from flask.blueprints import Blueprint
 
         swagger_blueprint = Blueprint(
-            'swagger_blueprint', __name__, url_prefix=self._url_prefix,
+            self._swagger_blueprint, __name__, url_prefix=self._url_prefix,
             static_folder=self.static_dir, static_url_path='/'
         )
 
